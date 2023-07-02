@@ -7,7 +7,10 @@ $this->title = 'Home';
 ?>
 <div class="site-index">
     <?php if (yii::$app->session->hasFlash('message')) : ?>
-        <?php echo yii::$app->session->getFlash('message'); ?>
+        <div class="alert alert-success alert-dismissible fade show">
+            <strong><?php echo yii::$app->session->getFlash('message'); ?></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     <?php endif; ?>
     <div class="jumbotron text-center bg-transparent mt-5 mb-5">
         <h1 class="display-4">YII CRUD APPLICATION!</h1>
@@ -41,8 +44,8 @@ $this->title = 'Home';
                                 <td><?php echo $post->description; ?></td>
                                 <td><?php echo $post->category; ?></td>
                                 <td>
-                                    <?= Html::a('Update', 'Update') ?>
-                                    <?= Html::a('Update', 'Delete') ?>
+                                    <?= Html::a('Update', ['update', 'id' => $post->id], ['class' => 'btn btn-warning']) ?>
+                                    <?= Html::a('Delete', ['delete', 'id' => $post->id], ['class' => 'btn btn-danger']) ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

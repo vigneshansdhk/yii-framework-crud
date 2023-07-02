@@ -71,13 +71,13 @@ class SiteController extends Controller
     {
         $post = new Posts();
         $formdata = yii::$app->request->post();
-        if($post->load($formdata)){
-            if($post->save()){
-                Yii::$app->getSession()->setFlash('message','Post Create Successfully');
+        if ($post->load($formdata)) {
+            if ($post->save()) {
+                Yii::$app->getSession()->setFlash('message', 'Post Create Successfully');
                 return $this->redirect(['index']);
             }
-        }else{
-            Yii::$app->getSession()->setFlash('message','Failed to Post');
+        } else {
+            Yii::$app->getSession()->setFlash('message', 'Failed to Post');
         }
         return $this->render('create', ['post' => $post]);
     }
@@ -102,6 +102,26 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
+    }
+
+    public function actionUpdate($id)
+    {
+        $post = Posts::findOne($id);
+        if ($post->load(Yii::$app->request->post()) && $post->save()) {
+            Yii::$app->getSession()->setFlash('message', 'Post Update Successfully');
+            return $this->redirect(['index', 'id' => $post->id]);
+        } else {
+            return $this->render('update', ['post' => $post]);
+        }
+    }
+
+    public function actionDelete($id)
+    {
+        $post = Posts::findOne($id);
+        if ($post->delete()) {
+            Yii::$app->getSession()->setFlash('message', 'Post Delete Successfully');
+            return $this->redirect(['index']);
+        }
     }
 
     /**
